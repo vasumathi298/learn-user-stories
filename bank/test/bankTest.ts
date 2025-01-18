@@ -1,78 +1,76 @@
 import Bank from "../src/bank";
 
-//setup
+// Setup
 const bank = new Bank();
-const account = bank.createAccount("John Doe", 29, "2938298");
+const account = bank.createAccount("Alice Johnson", 34, "9876543");
 
-//scenario 1: successful account creation
-if(account.accountNumber === "2938298") {
+// Scenario 1: Successful account creation
+if (account.customerAccountNumber === "9876543") {
     console.log("Scenario 1 passed");
-}
-else {
+} else {
     console.log("Scenario 1 failed");
 }
 
-//scenario 2: account already exists
+// Scenario 2: Account already exists
 try {
-    bank.createAccount("John Doe", 29, "2938298");
+    bank.createAccount("Alice Johnson", 34, "9876543");
     console.log("Scenario 2 failed");
-}
-catch(_) {
+} catch (_) {
     console.log("Scenario 2 passed");
 }
 
-// scenario 3: successful deposit
+// Scenario 3: Successful deposit
 try {
-  bank.deposit(100, "2938298");
-  console.log("Scenario 3 passed");
+    bank.deposit(200, "9876543");
+    console.log("Scenario 3 passed");
 } catch (_) {
-  console.log("Scenario 3 failed");
+    console.log("Scenario 3 failed");
 }
 
-// scenario 4: negative deposit
+// Scenario 4: Negative deposit
 try {
-  bank.deposit(-10, "2938298");
-  console.log("Scenario 4 failed");
+    bank.deposit(-50, "9876543");
+    console.log("Scenario 4 failed");
 } catch (_) {
-  console.log("Scenario 4 passed");
+    console.log("Scenario 4 passed");
 }
 
-// scenario 5: non-existant account
+// Scenario 5: Non-existent account
 try {
-  bank.deposit(100, "1234567");
-  console.log("Scenario 5 failed");
+    bank.deposit(150, "1111111");
+    console.log("Scenario 5 failed");
 } catch (_) {
-  console.log("Scenario 5 passed");
+    console.log("Scenario 5 passed");
 }
 
-// scenario 6: successfully withdraw
+// Scenario 6: Successfully withdraw
 try {
-  bank.withdraw(10, '2938298');
-  console.log("Scenario 6 passed");
+    bank.withdraw(50, "9876543");
+    console.log("Scenario 6 passed");
 } catch (_) {
-  console.log("Scenario 6 failed");
+    console.log("Scenario 6 failed");
 }
 
-// scenario 7: insufficient funds
+// Scenario 7: Insufficient funds
 try {
-  bank.withdraw(999, '2938298');
-  console.log("Scenario 7 failed");
+    bank.withdraw(1000, "9876543");
+    console.log("Scenario 7 failed");
 } catch (_) {
-  console.log("Scenario 7 passed");
+    console.log("Scenario 7 passed");
 }
 
-// scenario 8: invalid withdrawl amount
+// Scenario 8: Invalid withdrawal amount
 try {
-  bank.withdraw(-5, '2938298');
-  console.log("Scenario 8 failed");
+    bank.withdraw(-20, "9876543");
+    console.log("Scenario 8 failed");
 } catch (_) {
-  console.log("Scenario 8 passed");
+    console.log("Scenario 8 passed");
 }
 
-// scenario 9: successful balance check
+// Scenario 9: Successful balance check
 try {
-    const bal = bank.balanceCheck("2938298");
-    if (bal == account.balance) {
+    const bal = bank.balanceCheck("9876543");
+    if (bal === account.accountBalance) {
         console.log("Scenario 9 passed");
     } else {
         console.log("Scenario 9 failed");
@@ -81,9 +79,9 @@ try {
     console.log("Scenario 9 failed");
 }
 
-// scenario 10: invalid account
+// Scenario 10: Invalid account
 try {
-    bank.balanceCheck("1234567");
+    bank.balanceCheck("1111111");
     console.log("Scenario 10 failed");
 } catch (_) {
     console.log("Scenario 10 passed");

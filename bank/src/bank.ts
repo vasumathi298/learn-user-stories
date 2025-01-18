@@ -1,94 +1,94 @@
-// Indictes the type for all bank accounts in the bank
+// Indicates the type for all bank accounts in the bank
 interface BankAccount {
-    name: string;
-    age: number;
-    accountNumber: string;
-    balance: number;
-  } 
-  
+  customerName: string;
+  customerAge: number;
+  customerAccountNumber: string;
+  accountBalance: number;
+} 
+
+/**
+* Bank class that manages all bank accounts in the bank
+*/
+export default class Bank {
+  // Array to store all bank accounts in the bank 
+  private allAccounts: BankAccount[] = [];
+
   /**
-  * Bank class that manages all bank accounts in the bank
-  */
-  export default class Bank {
-    // Array to store all bank accounts in the bank 
-    private accounts: BankAccount[] = [];
-  
-    /**
-     * Method to find a bank account in the bank
-     * @param {string} accountNumber Account number of the bank account to find
-     * @returns Bank account if found, undefined otherwise
-     */
-    private findAccount(accountNumber: string): BankAccount | undefined {
-        return this.accounts.find(account => account.accountNumber === accountNumber);
-    }
-  
-    /**
-     * creates a new account with a unique account number
-     * @param name -- name of the customer
-     * @param age -- age of the customer
-     * @param accountNumber -- account number of the customer
-     * @returns BankAccount -- the created account
-     */
-    public createAccount(name: string, age: number, accountNumber: string): BankAccount {
-        const isAccExists = this.findAccount(accountNumber);
-        if (isAccExists) {
-            throw new Error("Account already exists");
-        }
-        const account: BankAccount = {
-            name,
-            age,
-            accountNumber,
-            balance: 0
-        };
-        this.accounts.push(account);
-        return account;
-    }
-  
-    /**
-     * deposits money given an amount and account number
-     * @param depositAmount -- amount of money to deposit
-     * @param accountNumber -- account number
-     */
-    public deposit(depositAmount: number, accountNumber: string): void {
-      if (depositAmount <= 0) {
+   * Method to find a bank account in the bank
+   * @param {string} customerAccountNumber Account number of the bank account to find
+   * @returns Bank account if found, undefined otherwise
+   */
+  private locateAccount(customerAccountNumber: string): BankAccount | undefined {
+      return this.allAccounts.find(account => account.customerAccountNumber === customerAccountNumber);
+  }
+
+  /**
+   * Creates a new account with a unique account number
+   * @param customerName -- name of the customer
+   * @param customerAge -- age of the customer
+   * @param customerAccountNumber -- account number of the customer
+   * @returns BankAccount -- the created account
+   */
+  public createAccount(customerName: string, customerAge: number, customerAccountNumber: string): BankAccount {
+      const accountExists = this.locateAccount(customerAccountNumber);
+      if (accountExists) {
+          throw new Error("Account already exists");
+      }
+      const newAccount: BankAccount = {
+          customerName,
+          customerAge,
+          customerAccountNumber,
+          accountBalance: 0
+      };
+      this.allAccounts.push(newAccount);
+      return newAccount;
+  }
+
+  /**
+   * Deposits money given an amount and account number
+   * @param amountToDeposit -- amount of money to deposit
+   * @param customerAccountNumber -- account number
+   */
+  public deposit(amountToDeposit: number, customerAccountNumber: string): void {
+      if (amountToDeposit <= 0) {
           throw new Error("Deposit must be greater than zero");
       }
-      const account = this.findAccount(accountNumber);
-      if (!account) {
+      const accountToDeposit = this.locateAccount(customerAccountNumber);
+      if (!accountToDeposit) {
           throw new Error("Account does not exist");
       }
-      account.balance += depositAmount;
-    }
-  
-    /**
-     * Withdraws money given an amount and account number
-     * @param withdrawAmount -- amount of money to withdraw
-     * @param accountNumber -- account number
-     */
-    public withdraw(withdrawAmount: number, accountNumber: string): void {
-      if (withdrawAmount <= 0) {
-        throw new Error("Withdrawal amount must be greater than zero");
-      }
-      const account = this.findAccount(accountNumber);
-      if (!account) {
-        throw new Error("Account does not exist");
-      }
-      if (account.balance < withdrawAmount) {
-        throw new Error("Insufficient funds");
-      }
-      account.balance -= withdrawAmount;
-    }
-  
-    /**
-     * Checks the balance of an account
-     * @param accountNumber - account number
-     * @returns account balance
-     */
-    public balanceCheck(accountNumber: string): number {
-      const account = this.findAccount(accountNumber);
-      if (!account) {
-          throw new Error("Account does not exist");
-      }
-      return account.balance;
-    }
+      accountToDeposit.accountBalance += amountToDeposit;
   }
+
+  /**
+   * Withdraws money given an amount and account number
+   * @param amountToWithdraw -- amount of money to withdraw
+   * @param customerAccountNumber -- account number
+   */
+  public withdraw(amountToWithdraw: number, customerAccountNumber: string): void {
+      if (amountToWithdraw <= 0) {
+          throw new Error("Withdrawal amount must be greater than zero");
+      }
+      const accountToWithdraw = this.locateAccount(customerAccountNumber);
+      if (!accountToWithdraw) {
+          throw new Error("Account does not exist");
+      }
+      if (accountToWithdraw.accountBalance < amountToWithdraw) {
+          throw new Error("Insufficient funds");
+      }
+      accountToWithdraw.accountBalance -= amountToWithdraw;
+  }
+
+  /**
+   * Checks the balance of an account
+   * @param customerAccountNumber - account number
+   * @returns account balance
+   */
+  public balanceCheck(customerAccountNumber: string): number {
+      const accountToCheck = this.locateAccount(customerAccountNumber);
+      if (!accountToCheck) {
+          throw new Error("Account does not exist");
+      }
+      return accountToCheck.accountBalance;
+  }
+}
